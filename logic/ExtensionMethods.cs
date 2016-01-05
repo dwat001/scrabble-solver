@@ -8,6 +8,7 @@ namespace Kakariki.Scrabble.Logic
 {
     public static class ExtensionMethods
     {
+        private const string ITEM_SEPERATOR = ", ";
         public static IEnumerable<int> AllIndexesOf(this string s, char c)
         {
             int startIndex = 0;
@@ -24,7 +25,11 @@ namespace Kakariki.Scrabble.Logic
         {
             StringBuilder sb = new StringBuilder();
             sb.Append('[');
-            enumerable.All(t => { sb.Append(t).Append(", "); return true; });
+            enumerable.All(t => { sb.Append(t).Append(ITEM_SEPERATOR); return true; });
+            if (sb.Length > 1)
+            {
+                sb.Length -= ITEM_SEPERATOR.Length;
+            }
             sb.Append(']');
             return sb.ToString();
         }
