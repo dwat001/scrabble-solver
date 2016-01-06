@@ -58,6 +58,7 @@
     <Compile Include="ExtensionMethodsTests.cs" />
     <Compile Include="HandTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WordListTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\logic\Logic.csproj">
