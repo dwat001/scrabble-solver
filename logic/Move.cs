@@ -41,7 +41,7 @@ namespace Kakariki.Scrabble.Logic
 
                     foreach (char c in Word)
                     {
-                        Board.Cell currentCell = Board.GetCell(currentBoardPosition);
+                        Cell currentCell = Board.GetCell(currentBoardPosition);
                         if (currentCell.Letter.HasValue)
                         {
                             Debug.Assert(currentCell.Letter == c);
@@ -68,7 +68,7 @@ namespace Kakariki.Scrabble.Logic
             }
         }
 
-        private int AdditionalWordScores(Logic.Board.Cell currentCell, int letterScore, int wordMultiplierFromLetter, char placedLetter)
+        private int AdditionalWordScores(Logic.Cell currentCell, int letterScore, int wordMultiplierFromLetter, char placedLetter)
         {
             // Find Additional words 
             string word = Board.GetWord(InverseOrientation, currentCell, placedLetter);
@@ -86,29 +86,29 @@ namespace Kakariki.Scrabble.Logic
             get { return Orientation == MoveOrientation.HORIZONTAL ? MoveOrientation.VERTICAL : MoveOrientation.HORIZONTAL; }
         }
 
-        private void GetLetterEffect(char c, Logic.Board.CellType cellType, out int letterScore, out int wordMultiplierFromLetter)
+        private void GetLetterEffect(char c, CellType cellType, out int letterScore, out int wordMultiplierFromLetter)
         {
             int simpleLetterScore = GetSimpleLetterScore(c);
 
             switch (cellType)
             {
-                case Logic.Board.CellType.DOUBLE_LETTER:
+                case CellType.DOUBLE_LETTER:
                     letterScore = 2 * simpleLetterScore;
                     wordMultiplierFromLetter = 1;
                     return;
-                case Logic.Board.CellType.TRIPPLE_LETTER:
+                case CellType.TRIPPLE_LETTER:
                     letterScore = 3 * simpleLetterScore;
                     wordMultiplierFromLetter = 1;
                     return;
-                case Logic.Board.CellType.DOUBLE_WORD:
+                case CellType.DOUBLE_WORD:
                     letterScore = simpleLetterScore;
                     wordMultiplierFromLetter = 2;
                     return;
-                case Logic.Board.CellType.TRIPPLE_WORD:
+                case CellType.TRIPPLE_WORD:
                     letterScore = simpleLetterScore;
                     wordMultiplierFromLetter = 3;
                     return;
-                case Logic.Board.CellType.NORMAL:
+                case CellType.NORMAL:
                     letterScore = simpleLetterScore;
                     wordMultiplierFromLetter = 1;
                     return;
@@ -117,7 +117,7 @@ namespace Kakariki.Scrabble.Logic
             }
         }
 
-        private int AdditionalWordScores(char c, Logic.Board.Cell currentCell)
+        private int AdditionalWordScores(char c, Cell currentCell)
         {
             throw new NotImplementedException();
         }

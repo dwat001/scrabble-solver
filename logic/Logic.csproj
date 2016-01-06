@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Board.cs" />
+    <Compile Include="Cell.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="MoveFinder.cs" />

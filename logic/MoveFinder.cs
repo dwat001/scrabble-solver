@@ -33,7 +33,7 @@ namespace Kakariki.Scrabble.Logic
             foreach (string word in possibleWords)
             {
                 IEnumerable<char> requiredLetters = GetLettersRequiredFromBoard(word);
-                IEnumerable<Board.Cell> cellsWithLetters = board.AllCells.Where(c => c.Letter.HasValue);
+                IEnumerable<Cell> cellsWithLetters = board.AllCells.Where(c => c.Letter.HasValue);
                 if (!cellsWithLetters.Any())
                 {
                     foreach (Move m in GetPossibleStartingMoves(word))
@@ -43,7 +43,7 @@ namespace Kakariki.Scrabble.Logic
                 }
                 else if (requiredLetters.Any())
                 {
-                    foreach (Board.Cell cell in cellsWithLetters.Where(c => requiredLetters.Contains(c.Letter.Value)))
+                    foreach (Cell cell in cellsWithLetters.Where(c => requiredLetters.Contains(c.Letter.Value)))
                     {
                         foreach (Move m in GetPossibleMoves(word, cell))
                         {
@@ -53,7 +53,7 @@ namespace Kakariki.Scrabble.Logic
                 }
                 else
                 {
-                    foreach (Board.Cell cell in cellsWithLetters.Where(c => word.Contains(c.Letter.Value)))
+                    foreach (Cell cell in cellsWithLetters.Where(c => word.Contains(c.Letter.Value)))
                     {
                         foreach (Move m in GetPossibleMoves(word, cell))
                         {
@@ -87,7 +87,7 @@ namespace Kakariki.Scrabble.Logic
             }
         }
 
-        private IEnumerable<Move> GetPossibleMoves(string word, Board.Cell cell)
+        private IEnumerable<Move> GetPossibleMoves(string word, Cell cell)
         {
             foreach (int index in word.AllIndexesOf(cell.Letter.Value))
             {
