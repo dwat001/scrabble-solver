@@ -4,22 +4,22 @@ namespace Kakariki.Scrabble.Logic
 {
     public class Cell
     {
-        public Cell(CellType cellType, int xPosition, int yPosition, char? letter)
+        public Cell(CellType cellType, int column, int row, char? letter)
         {
             Type = cellType;
-            XPosition = xPosition;
-            YPosition = yPosition;
+            Column = column;
+            Row = row;
             Letter = letter;
         }
 
         public CellType Type { get; private set; }
-        public int XPosition { get; private set; }
-        public int YPosition { get; private set; }
+        public int Column { get; private set; }
+        public int Row { get; private set; }
         public char? Letter { get; set; }
 
         public override string ToString()
         {
-            return string.Format("({0},{1}) [{2}]", XPosition, YPosition, ToChar());
+            return string.Format("({0},{1}) [{2}]", Column, Row, ToChar());
         }
 
         public char ToChar()

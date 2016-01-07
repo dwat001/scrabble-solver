@@ -9,8 +9,8 @@ namespace Kakariki.Scrabble.Logic
 {
     public class Move
     {
-        public int XPosition { get; private set; }
-        public int YPosition { get; private set; }
+        public int Column { get; private set; }
+        public int Row { get; private set; }
         public MoveOrientation Orientation { get; private set; }
         public string Word { get; private set; }
         private Board Board {get; set;}
@@ -18,10 +18,10 @@ namespace Kakariki.Scrabble.Logic
 
         private int? score;
 
-        public Move(int xPos, int yPos, MoveOrientation orientation, string word, Hand hand, Board board)
+        public Move(int column, int row, MoveOrientation orientation, string word, Hand hand, Board board)
         {
-            this.XPosition = xPos;
-            this.YPosition = yPos;
+            this.Column = column;
+            this.Row = row;
             this.Orientation = orientation;
             this.Word = word;
             this.Hand = hand;
@@ -36,7 +36,7 @@ namespace Kakariki.Scrabble.Logic
                 {
                     int workInProgress = 0;
                     int wordMultiplier = 1;
-                    var currentBoardPosition = new Tuple<int, int>(XPosition, YPosition);
+                    var currentBoardPosition = new Tuple<int, int>(Column, Row);
                     var lettersInHand = new List<char>(Hand.Letters);
 
                     foreach (char c in Word)
@@ -190,17 +190,17 @@ namespace Kakariki.Scrabble.Logic
             switch (Orientation)
             {
                 case MoveOrientation.HORIZONTAL:
-                    if (row != YPosition || column < XPosition || column > XPosition + Word.Length -1)
+                    if (row != Row || column < Column || column > Column + Word.Length -1)
                     {
                         return null;
                     }
-                    return Word[column - XPosition];
+                    return Word[column - Column];
                 case MoveOrientation.VERTICAL:
-                    if (column != XPosition || row < YPosition || row > YPosition + Word.Length -1)
+                    if (column != Column || row < Row || row > Row + Word.Length -1)
                     {
                         return null;
                     }
-                    return Word[row - YPosition];
+                    return Word[row - Row];
                 default:
                     throw new ApplicationException("Unkown Orientation");
             }
@@ -221,7 +221,7 @@ namespace Kakariki.Scrabble.Logic
 
         public override string ToString()
         {
-            return string.Format("{4} - ({0},{1}), {2} - {3}", XPosition, YPosition, Orientation, Word, Score);
+            return string.Format("{4} - ({0},{1}), {2} - {3}", Column, Row, Orientation, Word, Score);
         }
     }
 

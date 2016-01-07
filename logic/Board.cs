@@ -50,78 +50,78 @@ namespace Kakariki.Scrabble.Logic
 
         public ImmutableDictionary<char, int> LetterCounts { get { return null; } }
 
-        private static Cell CreateCell(int x, int y, char? letter)
+        private static Cell CreateCell(int column, int row, char? letter)
         {
-            if (x == y || 8 - x == y - 8)
+            if (column == row || 8 - column == row - 8)
             {
-                switch (y)
+                switch (row)
                 {
                     case 1:
                     case 15:
-                        return new Cell(CellType.TRIPPLE_WORD, x, y, letter);                        
+                        return new Cell(CellType.TRIPPLE_WORD, column, row, letter);                        
                     case 7:
                     case 9:
-                        return new Cell(CellType.DOUBLE_LETTER, x, y, letter);                        
+                        return new Cell(CellType.DOUBLE_LETTER, column, row, letter);                        
                     case 6:
                     case 10:
-                        return new Cell(CellType.TRIPPLE_LETTER, x, y, letter);  
+                        return new Cell(CellType.TRIPPLE_LETTER, column, row, letter);  
                     default:
-                        return new Cell(CellType.DOUBLE_WORD, x, y, letter);
+                        return new Cell(CellType.DOUBLE_WORD, column, row, letter);
                 }
             }
 
-            switch(y)
+            switch(row)
             {
                 case 1:
                 case 15:
                 case 8:
-                    if (x == 4 || x == 12)
+                    if (column == 4 || column == 12)
                     {
-                        return new Cell(CellType.DOUBLE_LETTER, x, y, letter);
+                        return new Cell(CellType.DOUBLE_LETTER, column, row, letter);
                     }
-                    if (x == 1 || x == 15 || x == 8)
+                    if (column == 1 || column == 15 || column == 8)
                     {
-                        return new Cell(CellType.TRIPPLE_WORD, x, y, letter);
+                        return new Cell(CellType.TRIPPLE_WORD, column, row, letter);
                     }
                     break;
                 case 2:
                 case 14:
-                    if ((x == 6 || x == 10))
+                    if ((column == 6 || column == 10))
                     {
-                        return new Cell(CellType.TRIPPLE_LETTER, x, y, letter);
+                        return new Cell(CellType.TRIPPLE_LETTER, column, row, letter);
                     }
                     break;
                 case 3:
                 case 13:
-                    if ((x == 7 || x == 9))
+                    if ((column == 7 || column == 9))
                     {
-                        return new Cell(CellType.DOUBLE_LETTER, x, y, letter);
+                        return new Cell(CellType.DOUBLE_LETTER, column, row, letter);
                     }
                     break;
                 case 4:
                 case 12:
-                    if ((x == 1 || x == 8 || x == 15 ))
+                    if ((column == 1 || column == 8 || column == 15 ))
                     {
-                        return new Cell(CellType.DOUBLE_LETTER, x, y, letter);
+                        return new Cell(CellType.DOUBLE_LETTER, column, row, letter);
                     }
                     break;
                 case 7:
                 case 9:
-                    if(x == 3 || x == 13)
+                    if(column == 3 || column == 13)
                     {
-                        return new Cell(CellType.DOUBLE_LETTER, x, y, letter); 
+                        return new Cell(CellType.DOUBLE_LETTER, column, row, letter); 
                     }
                     break;
                 case 6:
                 case 10:
-                    if(x== 2 || x == 14)
+                    if(column== 2 || column == 14)
                     {
-                        return new Cell(CellType.TRIPPLE_LETTER, x, y, letter);
+                        return new Cell(CellType.TRIPPLE_LETTER, column, row, letter);
                     }
                     break;
             }
 
-            return new Cell(CellType.NORMAL, x, y, null);
+            return new Cell(CellType.NORMAL, column, row, null);
         }
 
         public static Board InitiliseBoard(WordList words)
@@ -145,10 +145,10 @@ namespace Kakariki.Scrabble.Logic
         
         internal bool IsValidMove(Move possibleMove, Hand hand)
         {
-            if(possibleMove.XPosition < BOARD_START_INDEX ||
-                possibleMove.XPosition > BOARD_END_INDEX ||
-                possibleMove.YPosition < BOARD_START_INDEX ||
-                possibleMove.YPosition > BOARD_END_INDEX)
+            if(possibleMove.Column < BOARD_START_INDEX ||
+                possibleMove.Column > BOARD_END_INDEX ||
+                possibleMove.Row < BOARD_START_INDEX ||
+                possibleMove.Row > BOARD_END_INDEX)
             {
                 return false;
             }
@@ -165,12 +165,12 @@ namespace Kakariki.Scrabble.Logic
 
         private bool IsValidHorizontialMove(Move possibleMove, Hand hand)
         {
-            if (possibleMove.XPosition + possibleMove.Word.Length > BOARD_END_INDEX)
+            if (possibleMove.Column + possibleMove.Word.Length > BOARD_END_INDEX)
             {
                 return false;
             }
-            int column = possibleMove.XPosition;
-            int row = possibleMove.YPosition;
+            int column = possibleMove.Column;
+            int row = possibleMove.Row;
             var lettersInHand = new List<char>(hand.Letters);
             bool letterFromHandUsed = false;
 
@@ -208,12 +208,12 @@ namespace Kakariki.Scrabble.Logic
 
         private bool IsValidVerticalMove(Move possibleMove, Hand hand)
         {
-            if (possibleMove.YPosition + possibleMove.Word.Length > BOARD_END_INDEX)
+            if (possibleMove.Row + possibleMove.Word.Length > BOARD_END_INDEX)
             {
                 return false;
             }
-            int column = possibleMove.XPosition;
-            int row = possibleMove.YPosition;
+            int column = possibleMove.Column;
+            int row = possibleMove.Row;
             var lettersInHand = new List<char>(hand.Letters);
             bool letterFromHandUsed = false;
 
@@ -270,32 +270,32 @@ namespace Kakariki.Scrabble.Logic
             {
                 return true;
             }
-            int yStart = row;
-            int yEnd = row;
-            for (int y = yStart; y >= BOARD_START_INDEX; y--)
+            int rowStart = row;
+            int rowEnd = row;
+            for (int currentRow = rowStart; currentRow >= BOARD_START_INDEX; currentRow--)
             {
-                if (!(possibleMove.GetLetterAt(y, column) ?? cells[y][column].Letter).HasValue)
+                if (!(possibleMove.GetLetterAt(currentRow, column) ?? cells[currentRow][column].Letter).HasValue)
                 {
                     break;
                 }
-                yStart = y;
+                rowStart = currentRow;
             }
-            for (int y = yEnd; y <= BOARD_END_INDEX; y++)
+            for (int currentRow = rowEnd; currentRow <= BOARD_END_INDEX; currentRow++)
             {
-                if (!(possibleMove.GetLetterAt(y, column) ?? cells[y][column].Letter).HasValue)
+                if (!(possibleMove.GetLetterAt(currentRow, column) ?? cells[currentRow][column].Letter).HasValue)
                 {
                     break;
                 }
-                yEnd = y;
+                rowEnd = currentRow;
             }
-            if (yStart == yEnd)
+            if (rowStart == rowEnd)
             {
                 return true;
             }
             StringBuilder sb = new StringBuilder();
-            for (int y = yStart; y <= yEnd; y++)
+            for (int currentRow = rowStart; currentRow <= rowEnd; currentRow++)
             {
-                sb.Append((possibleMove.GetLetterAt(y, column) ?? cells[y][column].Letter).Value);
+                sb.Append((possibleMove.GetLetterAt(currentRow, column) ?? cells[currentRow][column].Letter).Value);
             }
             return words.Contains(sb.ToString());
         }
@@ -312,32 +312,32 @@ namespace Kakariki.Scrabble.Logic
             {
                 return true;
             }
-            int xStart = column;
-            int xEnd = column;
-            for (int x = xStart; x >= BOARD_START_INDEX; x--)
+            int columnStart = column;
+            int columnEnd = column;
+            for (int currentColumn = columnStart; currentColumn >= BOARD_START_INDEX; currentColumn--)
             {
-                if (!(cells[row][x].Letter ?? possibleMove.GetLetterAt(row, x)).HasValue)
+                if (!(cells[row][currentColumn].Letter ?? possibleMove.GetLetterAt(row, currentColumn)).HasValue)
                 {
                     break;
                 }
-                xStart = x;
+                columnStart = currentColumn;
             }
-            for (int x = xEnd; x <= BOARD_END_INDEX; x++)
+            for (int currentColumn = columnEnd; currentColumn <= BOARD_END_INDEX; currentColumn++)
             {
-                if (!(cells[row][x].Letter ?? possibleMove.GetLetterAt(row, x)).HasValue)
+                if (!(cells[row][currentColumn].Letter ?? possibleMove.GetLetterAt(row, currentColumn)).HasValue)
                 {
                     break;
                 }
-                xEnd = x;
+                columnEnd = currentColumn;
             }
-            if (xStart == xEnd)
+            if (columnStart == columnEnd)
             {
                 return true;
             }
             StringBuilder sb = new StringBuilder();
-            for (int x = xStart; x <= xEnd; x++)
+            for (int currentColumn = columnStart; currentColumn <= columnEnd; currentColumn++)
             {
-                sb.Append((possibleMove.GetLetterAt(row, x) ?? cells[row][x].Letter).Value);
+                sb.Append((possibleMove.GetLetterAt(row, currentColumn) ?? cells[row][currentColumn].Letter).Value);
             }
             return words.Contains(sb.ToString());
         }
@@ -361,7 +361,7 @@ namespace Kakariki.Scrabble.Logic
                 }
                 foreach (Cell cell in row)
                 {
-                    if (cell.XPosition == 0)
+                    if (cell.Column == 0)
                     {
                         sb.Append(rowCount.ToString().Last());
                     }
@@ -385,7 +385,7 @@ namespace Kakariki.Scrabble.Logic
 
         public void Apply(Move move)
         {
-            var rowColumn = new Tuple<int, int>(move.YPosition, move.XPosition);
+            var rowColumn = new Tuple<int, int>(move.Row, move.Column);
             foreach (char c in move.Word)
             {
                 cells[rowColumn.Item1][rowColumn.Item2].Letter = c;
@@ -419,7 +419,7 @@ namespace Kakariki.Scrabble.Logic
             StringBuilder sb = new StringBuilder();
             Cell currentCell = startCell;
             while (currentCell != null && (currentCell.Letter.HasValue ||
-                (currentCell.XPosition == initialCell.XPosition && currentCell.YPosition == initialCell.YPosition) ))
+                (currentCell.Column == initialCell.Column && currentCell.Row == initialCell.Row) ))
             {
                 sb.Append(currentCell.Letter ?? proposedLetter);
                 currentCell = NextCell(currentCell, orientation);
@@ -433,17 +433,17 @@ namespace Kakariki.Scrabble.Logic
             switch (orientation)
             {
                 case MoveOrientation.VERTICAL:
-                    if (currentCell.YPosition >= BOARD_END_INDEX)
+                    if (currentCell.Row >= BOARD_END_INDEX)
                     {
                         return null;
                     }
-                    return cells[currentCell.YPosition + 1][currentCell.XPosition];
+                    return cells[currentCell.Row + 1][currentCell.Column];
                 case MoveOrientation.HORIZONTAL:
-                    if (currentCell.XPosition >= BOARD_END_INDEX)
+                    if (currentCell.Column >= BOARD_END_INDEX)
                     {
                         return null;
                     }
-                    return cells[currentCell.YPosition][currentCell.XPosition + 1];
+                    return cells[currentCell.Row][currentCell.Column + 1];
                 default:
                     throw new ApplicationException("Unexpected Orientation");
             }
@@ -454,17 +454,17 @@ namespace Kakariki.Scrabble.Logic
             switch (orientation)
             {
                 case MoveOrientation.VERTICAL:
-                    if (currentCell.YPosition <= BOARD_START_INDEX)
+                    if (currentCell.Row <= BOARD_START_INDEX)
                     {
                         return null;
                     }
-                    return cells[currentCell.YPosition - 1][currentCell.XPosition];
+                    return cells[currentCell.Row - 1][currentCell.Column];
                 case MoveOrientation.HORIZONTAL:
-                    if (currentCell.XPosition <= BOARD_START_INDEX)
+                    if (currentCell.Column <= BOARD_START_INDEX)
                     {
                         return null;
                     }
-                    return cells[currentCell.YPosition][currentCell.XPosition - 1];
+                    return cells[currentCell.Row][currentCell.Column - 1];
                 default:
                     throw new ApplicationException("Unexpected Orientation");
             }

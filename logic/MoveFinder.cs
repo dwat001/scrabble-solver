@@ -72,18 +72,18 @@ namespace Kakariki.Scrabble.Logic
 
         private IEnumerable<Move> GetPossibleStartingMoves(string word)
         {
-            for (int x = 0; x < word.Length; x++)
+            for (int column = 0; column < word.Length; column++)
             {
-                Move possibleMove = new Move(8 - x, 8, MoveOrientation.HORIZONTAL, word, hand, board);
+                Move possibleMove = new Move(8 - column, 8, MoveOrientation.HORIZONTAL, word, hand, board);
                 if (board.IsValidMove(possibleMove, hand))
                 {
                     yield return possibleMove;
                 }
             }
 
-            for (int y = 0; y < word.Length; y++)
+            for (int row = 0; row < word.Length; row++)
             {
-                Move possibleMove = new Move(8, 8 - y, MoveOrientation.VERTICAL, word, hand, board);
+                Move possibleMove = new Move(8, 8 - row, MoveOrientation.VERTICAL, word, hand, board);
                 if (board.IsValidMove(possibleMove, hand))
                 {
                     yield return possibleMove;
@@ -95,12 +95,12 @@ namespace Kakariki.Scrabble.Logic
         {
             foreach (int index in word.AllIndexesOf(cell.Letter.Value))
             {
-                Move possibleMove = new Move(cell.XPosition - index, cell.YPosition, MoveOrientation.HORIZONTAL, word, hand, board);
+                Move possibleMove = new Move(cell.Column - index, cell.Row, MoveOrientation.HORIZONTAL, word, hand, board);
                 if (board.IsValidMove(possibleMove, hand))
                 {
                     yield return possibleMove;
                 }
-                possibleMove = new Move(cell.XPosition, cell.YPosition - index, MoveOrientation.VERTICAL, word, hand, board);
+                possibleMove = new Move(cell.Column, cell.Row - index, MoveOrientation.VERTICAL, word, hand, board);
                 if (board.IsValidMove(possibleMove, hand))
                 {
                     yield return possibleMove;

@@ -10,14 +10,14 @@ namespace Kakariki.Scrabble.Logic.Tests
         {
             Cell cell = new Cell(CellType.NORMAL, 3, 4, null);
             Assert.AreEqual(CellType.NORMAL, cell.Type);
-            Assert.AreEqual(3, cell.XPosition);
-            Assert.AreEqual(4, cell.YPosition);
+            Assert.AreEqual(3, cell.Column);
+            Assert.AreEqual(4, cell.Row);
             Assert.IsNull(cell.Letter);
 
             cell = new Cell(CellType.TRIPPLE_LETTER, 4, 5, 'z');
             Assert.AreEqual(CellType.TRIPPLE_LETTER, cell.Type);
-            Assert.AreEqual(4, cell.XPosition);
-            Assert.AreEqual(5, cell.YPosition);
+            Assert.AreEqual(4, cell.Column);
+            Assert.AreEqual(5, cell.Row);
             Assert.IsTrue(cell.Letter.HasValue);
             Assert.AreEqual('z', cell.Letter.Value);
         }

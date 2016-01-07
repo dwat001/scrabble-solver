@@ -28,8 +28,8 @@ namespace Kakariki.Scrabble.Logic.Tests
             var catMove = moves[0];
             Assert.AreEqual("cat", catMove.Word);
             Assert.AreEqual(MoveOrientation.VERTICAL, catMove.Orientation);
-            Assert.AreEqual(4, catMove.YPosition);
-            Assert.AreEqual(7, catMove.XPosition);
+            Assert.AreEqual(4, catMove.Row);
+            Assert.AreEqual(7, catMove.Column);
         }
 
         [TestMethod()]
@@ -48,8 +48,8 @@ namespace Kakariki.Scrabble.Logic.Tests
             var catMove = moves[0];
             Assert.AreEqual("cat", catMove.Word);
             Assert.AreEqual(MoveOrientation.VERTICAL, catMove.Orientation);
-            Assert.AreEqual(4, catMove.YPosition);
-            Assert.AreEqual(7, catMove.XPosition);
+            Assert.AreEqual(4, catMove.Row);
+            Assert.AreEqual(7, catMove.Column);
         }
 
         [TestMethod()]
@@ -67,8 +67,8 @@ namespace Kakariki.Scrabble.Logic.Tests
             var catMove = moves[0];
             Assert.AreEqual("cat", catMove.Word);
             Assert.AreEqual(MoveOrientation.HORIZONTAL, catMove.Orientation);
-            Assert.AreEqual(5, catMove.YPosition);
-            Assert.AreEqual(6, catMove.XPosition);
+            Assert.AreEqual(5, catMove.Row);
+            Assert.AreEqual(6, catMove.Column);
         }
 
         [TestMethod()]
@@ -87,8 +87,8 @@ namespace Kakariki.Scrabble.Logic.Tests
             var catMove = moves[0];
             Assert.AreEqual("cat", catMove.Word);
             Assert.AreEqual(MoveOrientation.HORIZONTAL, catMove.Orientation);
-            Assert.AreEqual(5, catMove.YPosition);
-            Assert.AreEqual(6, catMove.XPosition);
+            Assert.AreEqual(5, catMove.Row);
+            Assert.AreEqual(6, catMove.Column);
         }
 
         [TestMethod()]
@@ -107,8 +107,8 @@ namespace Kakariki.Scrabble.Logic.Tests
             var catMove = moves[0];
             Assert.AreEqual("cat", catMove.Word);
             Assert.AreEqual(MoveOrientation.HORIZONTAL, catMove.Orientation);
-            Assert.AreEqual(6, catMove.YPosition);
-            Assert.AreEqual(6, catMove.XPosition);
+            Assert.AreEqual(6, catMove.Row);
+            Assert.AreEqual(6, catMove.Column);
             Assert.AreEqual(11, catMove.Score);
 
             Assert.AreEqual(6, moves[1].Score);
