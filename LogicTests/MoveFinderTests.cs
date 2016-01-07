@@ -12,7 +12,7 @@ namespace Kakariki.Scrabble.Logic.Tests
     public class MoveFinderTests
     {
         private Board board;
-        
+
         [TestMethod()]
         public void FindMovesFindSimpleVerticalMoveTest()
         {
@@ -89,6 +89,34 @@ namespace Kakariki.Scrabble.Logic.Tests
             Assert.AreEqual(MoveOrientation.HORIZONTAL, catMove.Orientation);
             Assert.AreEqual(5, catMove.Row);
             Assert.AreEqual(6, catMove.Column);
+        }
+
+        [TestMethod]
+        public void FindMovesStartingMovesTest()
+        {
+            var words = WordList.Load(new string[] { "cat" });
+            board = Board.InitiliseBoard(words);
+            Hand hand = new Hand("cat");
+            MoveFinder finder = new MoveFinder(board, hand, words);
+            var moves = finder.FindMoves().ToList();
+            Assert.AreEqual(6, moves.Count);
+        }
+
+        [TestMethod]
+        public void FindMovesOrderTest()
+        {
+            var words = WordList.Load(new string[] { "cat", "fish", "catfish" });
+            board = Board.InitiliseBoard(words);
+            board.GetCell(7, 4).Letter = 'a';
+            Hand hand = new Hand("ctfish");
+            MoveFinder finder = new MoveFinder(board, hand, words);
+            var moves = finder.FindMoves().ToList();
+            Assert.AreEqual(4, moves.Count);
+            // Catfish will get more points then cat.
+            Assert.AreEqual("catfish", moves[0].Word);
+            Assert.AreEqual("catfish", moves[1].Word);
+            Assert.AreEqual("cat", moves[2].Word);
+            Assert.AreEqual("cat", moves[3].Word);
         }
 
         [TestMethod()]
