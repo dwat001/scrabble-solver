@@ -90,7 +90,7 @@ namespace Kakariki.Scrabble.Termanal
                     char c = char.ToLower(line[column]);
                     if (c >= 'a' && c <= 'z')
                     {
-                        board.GetCell(new Tuple<int, int>(column, row)).Letter = c;
+                        board.GetCell(column, row).Letter = c;
                     }
                 }
                 row++;

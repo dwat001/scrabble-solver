@@ -28,6 +28,11 @@ namespace Kakariki.Scrabble.Logic
             }
         }
 
+        public Cell GetCell(int column, int row)
+        {
+            return cells[row][column];
+        }
+
         public Cell GetCell(Tuple<int, int> xPosYPos)
         {
             return cells[xPosYPos.Item2][xPosYPos.Item1];
@@ -234,6 +239,9 @@ namespace Kakariki.Scrabble.Logic
                     letterFromHandUsed = true;
                     lettersInHand.Remove(c);
                 }
+                // TODO: the actual word is checked once for each letter. 
+                // Should check in the direction of move once.
+                // the alternative direction should be checked for each letter.
                 if (!ValidWordsFormed(row, column, possibleMove))
                 {
                     return false;
@@ -250,8 +258,18 @@ namespace Kakariki.Scrabble.Logic
                 ValidWordsFormedHorizontily(row, column, possibleMove);
         }
 
+        /// <summary>
+        /// Note: does not check existing words are valid.
+        /// </summary>
         private bool ValidWordsFormedVerticaly(int row, int column, Move possibleMove)
         {
+            // If this move have not added a letter here, and is a Horizontal move, 
+            // don't check as we have not altered the word.
+            if (cells[row][column].Letter.HasValue &&
+                possibleMove.Orientation == MoveOrientation.HORIZONTAL)
+            {
+                return true;
+            }
             int yStart = row;
             int yEnd = row;
             for (int y = yStart; y >= BOARD_START_INDEX; y--)
@@ -282,8 +300,18 @@ namespace Kakariki.Scrabble.Logic
             return words.Contains(sb.ToString());
         }
 
+        /// <summary>
+        /// Note: does not check existing words are valid.
+        /// </summary>
         private bool ValidWordsFormedHorizontily(int row, int column, Move possibleMove)
         {
+            // If this move have not added a letter here, and is a Horizontal move, 
+            // don't check as we have not altered the word.
+            if (cells[row][column].Letter.HasValue &&
+                possibleMove.Orientation == MoveOrientation.VERTICAL)
+            {
+                return true;
+            }
             int xStart = column;
             int xEnd = column;
             for (int x = xStart; x >= BOARD_START_INDEX; x--)

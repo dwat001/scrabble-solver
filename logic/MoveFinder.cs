@@ -34,6 +34,8 @@ namespace Kakariki.Scrabble.Logic
             {
                 IEnumerable<char> requiredLetters = GetLettersRequiredFromBoard(word);
                 IEnumerable<Cell> cellsWithLetters = board.AllCells.Where(c => c.Letter.HasValue);
+
+                // If there are no letters on the board do a starting move
                 if (!cellsWithLetters.Any())
                 {
                     foreach (Move m in GetPossibleStartingMoves(word))
@@ -41,6 +43,7 @@ namespace Kakariki.Scrabble.Logic
                         yield return m;
                     }
                 }
+                // If there are required letters only look at cells with those letters
                 else if (requiredLetters.Any())
                 {
                     foreach (Cell cell in cellsWithLetters.Where(c => requiredLetters.Contains(c.Letter.Value)))
@@ -51,6 +54,7 @@ namespace Kakariki.Scrabble.Logic
                         }
                     }
                 }
+                // If no letters are required search for cells which have any of the letters in the word.
                 else
                 {
                     foreach (Cell cell in cellsWithLetters.Where(c => word.Contains(c.Letter.Value)))
@@ -119,6 +123,7 @@ namespace Kakariki.Scrabble.Logic
             var requiredLetters = new List<char>(word.Length);
             foreach (char letter in word)
             {
+                // This could be made more efficent, maybe replace occurance with SPACE or similar.
                 if (muttableLetters.Contains(letter))
                 {
                     muttableLetters.Remove(letter);
