@@ -223,6 +223,51 @@ namespace Kakariki.Scrabble.Logic
         {
             return string.Format("{4} - ({0},{1}), {2} - {3}", Column, Row, Orientation, Word, Score);
         }
+
+        public bool Equals(Move other)
+        {
+            return Object.ReferenceEquals(this, other) ||( 
+               other != null && 
+               other.Orientation == this.Orientation &&
+               other.Column == this.Column &&
+               other.Row == this.Row &&
+               other.Word == this.Word &&
+               object.ReferenceEquals(other.Board, this.Board) &&
+               object.ReferenceEquals(other.Hand, this.Hand));
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Move);
+        }
+
+        public static bool operator ==(Move a, Move b)
+        {
+            // If both are null, or both are same instance, return true.
+            if (System.Object.ReferenceEquals(a, b))
+            {
+                return true;
+            }
+
+            // If one is null, but not both, return false.
+            if (((object)a == null) || ((object)b == null))
+            {
+                return false;
+            }
+
+            // Return true if the fields match:
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(Move a, Move b)
+        {
+            return !(a == b);
+        }
+
+        public override int GetHashCode()
+        {
+            return Tuple.Create(Row, Column, Word, Orientation).GetHashCode();
+        }      
     }
 
     public enum MoveOrientation
@@ -230,4 +275,6 @@ namespace Kakariki.Scrabble.Logic
         HORIZONTAL,
         VERTICAL
     }
+
+    
 }

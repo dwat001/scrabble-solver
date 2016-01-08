@@ -25,6 +25,7 @@ namespace Kakariki.Scrabble.Logic
         public IEnumerable<Move> FindMoves()
         {
             return GetPossibleMoves(wordList.Words.Where(s => HasLettersAvailable(s)))
+                .Distinct()
                 .OrderByDescending(move => move.Score);
         }
 

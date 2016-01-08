@@ -120,6 +120,43 @@ namespace Kakariki.Scrabble.Logic.Tests
         }
 
         [TestMethod()]
+        public void FindMovesBothDirectionsTest()
+        {
+            var words = WordList.Load(new string[] { "cat" });
+
+            board = Board.InitiliseBoard(words);
+            // Existing word (zap) not present in word list, should still form cat
+            board.GetCell(7, 4).Letter = 'c';
+            board.GetCell(8, 4).Letter = 'c';
+            board.GetCell(9, 4).Letter = 'c';
+
+            board.GetCell(7, 5).Letter = 'c';
+            board.GetCell(8, 5).Letter = null;
+            board.GetCell(9, 5).Letter = 't';
+
+            board.GetCell(7, 6).Letter = 't';
+            board.GetCell(8, 6).Letter = 't';
+            board.GetCell(9, 6).Letter = 't';
+            
+            Hand hand = new Hand("a");
+            MoveFinder finder = new MoveFinder(board, hand, words);
+            var moves = finder.FindMoves().ToList();
+
+            Assert.AreEqual(2, moves.Count);
+            Assert.AreEqual("cat", moves[0].Word);
+            Assert.AreEqual("cat", moves[1].Word);
+            Assert.AreNotEqual(moves[0].Orientation, moves[1].Orientation);
+            var horizontalMove = moves[0].Orientation == MoveOrientation.HORIZONTAL ? moves[0] : moves[1];
+            var verticalMove = moves[0].Orientation == MoveOrientation.VERTICAL ? moves[0] : moves[1];
+
+            Assert.AreEqual(verticalMove.Row, 4);
+            Assert.AreEqual(verticalMove.Column, 8);
+
+            Assert.AreEqual(horizontalMove.Row, 5);
+            Assert.AreEqual(horizontalMove.Column, 7);
+        }
+
+        [TestMethod()]
         public void FindMovesMultipleMovesSameWordTest()
         {
             var words = WordList.Load(new string[] { "cat" });
