@@ -15,7 +15,13 @@ namespace Kakariki.Scrabble.Logic
         public CellType Type { get; private set; }
         public int Column { get; private set; }
         public int Row { get; private set; }
-        public char? Letter { get; set; }
+
+        private char? letter;
+        public char? Letter
+        {
+            get { return letter; }
+            set { letter = value.HasValue ? char.ToLower(value.Value) : (char?)null; }
+        }
 
         public override string ToString()
         {

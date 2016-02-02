@@ -33,5 +33,18 @@ namespace Kakariki.Scrabble.Logic
             sb.Append(']');
             return sb.ToString();
         }
+
+        public static bool IsNullOrEmpty(this string str)
+        {
+            return string.IsNullOrEmpty(str);
+        }
+
+        public static T ThrowIfNull<T>(this T obj, string parameterName = null)
+                where T : class
+        {
+
+            if (obj == null) throw new ArgumentNullException(parameterName);
+            return obj;
+        }
     }
 }

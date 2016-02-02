@@ -1,0 +1,26 @@
+﻿@using Kakariki.Scrabble.Logic
+@using Kakariki.Scrabble.SimpleWeb.Models
+
+@model SuggestionRequestModel
+
+@using (Html.BeginForm("SuggestWords", "SimpleBoard"))
+{
+    <!--Html.EditorForModel()-->
+    @Html.EditorFor(m => m.Board)
+    @Html.LabelFor(m=>m.Hand.Letters)
+    @Html.EditorFor(m => m.Hand.Letters, new  { htmlAttributes = new {maxlength = 7 } })
+    <input type="submit" name="submit" value="Submit" />
+    @Html.DisplayFor(m => m.Suggestions)
+}
+
+@section scripts{
+    <script type="text/javascript">
+       $(function () {
+           $('.double-letter').each(function (ev) { $(this).attr("placeholder", "2xL"); });
+           $('.tripple-letter').each(function (ev) { $(this).attr("placeholder", "3xL"); });
+
+           $('.double-word').each(function (ev) { $(this).attr("placeholder", "2xW"); });
+           $('.tripple-word').each(function (ev) { $(this).attr("placeholder", "3xW"); });
+       });
+    </script>
+}

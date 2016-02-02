@@ -61,7 +61,7 @@ namespace Kakariki.Scrabble.Logic.Tests
         [TestMethod()]
         public void LoadExcludesTest()
         {
-            var list = WordList.Load(new string[] { "ab","a-d", "aa","a's","", "aC" });
+            var list = WordList.Load(new string[] { "ab","a-d", "aa","a's","", "aC", "äb" });
             Assert.IsTrue(Enumerable.SequenceEqual(new string[] { "aa", "ab", "ac" }, list.Words));
         }
         

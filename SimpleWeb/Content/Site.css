@@ -22,3 +22,80 @@ select,
 textarea {
     max-width: 280px;
 }
+
+input.double-word::-webkit-input-placeholder {
+    color:lightblue;
+}
+input.tripple-letter::-webkit-input-placeholder,
+input.tripple-word::-webkit-input-placeholder,
+input.double-letter::-webkit-input-placeholder {
+    color:black;
+}
+
+input.double-word::-moz-placeholder{
+    color:lightblue;
+}
+
+input.double-letter::-moz-placeholder,
+input.tripple-word::-moz-placeholder,
+input.tripple-letter::-moz-placeholder { /* Firefox 19+ */
+  color: black;
+}
+
+input.double-word:-ms-input-placeholder { /* IE 10+ */
+  color: lightblue;
+}
+
+input.double-letter:-ms-input-placeholder,
+input.tripple-word:-ms-input-placeholder,
+input.tripple-letter:-ms-input-placeholder { /* IE 10+ */
+  color: black;
+}
+
+
+.double-letter {
+    background-color :cornflowerblue;
+}
+
+.double-word {
+    background-color:red;
+    color:white;
+}
+
+.normal{
+
+}
+
+.tripple-letter{
+    background-color:greenyellow;
+    color:red;
+}
+.tripple-word{
+    background-color:orange;
+    color:white;
+}
+
+table.board thead th,
+table.board tfoot th {
+    text-align: center;
+}
+
+table.board tbody th
+ {
+    text-align: right;
+}
+
+table {
+    border-spacing: 0px;
+}
+
+td{
+    border-collapse:collapse;
+    border: 1px solid black;
+    padding:0px;
+}
+
+table.board input{
+    border: 0px none transparent;
+    text-align:center;
+}

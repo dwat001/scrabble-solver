@@ -9,12 +9,12 @@ namespace Kakariki.Scrabble.Logic
 {
     public class Move
     {
-        public int Column { get; private set; }
-        public int Row { get; private set; }
-        public MoveOrientation Orientation { get; private set; }
-        public string Word { get; private set; }
-        private Board Board {get; set;}
-        private Hand Hand {get; set;}
+        public int Column { get; }
+        public int Row { get; }
+        public MoveOrientation Orientation { get; }
+        public string Word { get; }
+        private Board Board {get;}
+        private Hand Hand {get;}
 
         private int? score;
 
@@ -275,6 +275,4 @@ namespace Kakariki.Scrabble.Logic
         HORIZONTAL,
         VERTICAL
     }
-
-    
 }

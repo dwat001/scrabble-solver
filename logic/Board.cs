@@ -9,8 +9,9 @@ namespace Kakariki.Scrabble.Logic
 {
     public class Board
     {
-        private const int BOARD_START_INDEX = 1;
-        private const int BOARD_END_INDEX = 15;
+        public const int BOARD_START_INDEX = 1;
+        public const int BOARD_END_INDEX = 15;
+
         private readonly IList<IList<Cell>> cells;
         private readonly WordList words;
 

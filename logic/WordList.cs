@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Kakariki.Scrabble.Logic
@@ -13,6 +14,7 @@ namespace Kakariki.Scrabble.Logic
     {
         private readonly ImmutableDictionary<char, IList<string>> wordsByStartingLetter;
         private readonly ImmutableList<string> words;
+        private static readonly Regex ASCII_WORD = new Regex("^[a-zA-Z]+$", RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
         private WordList(ImmutableDictionary<char, IList<string>> wordsByStartingLetter, IList<string> words)
         {
@@ -37,7 +39,7 @@ namespace Kakariki.Scrabble.Logic
             }
 
             input
-                .Where(s => s.Length > 0 && !s.Contains('-') && !s.Contains('\''))
+                .Where(s => s.Length > 0 && !s.Contains('-') && !s.Contains('\'') && ASCII_WORD.IsMatch(s))
                 .Select(s => s.ToLower())
                 .All(s => {
                     wordsByStartingLetter[s[0]].Add(s);
