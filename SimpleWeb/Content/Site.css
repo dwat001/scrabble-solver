@@ -85,11 +85,11 @@ table.board tbody th
     text-align: right;
 }
 
-table {
+table.board {
     border-spacing: 0px;
 }
 
-td{
+table.board td{
     border-collapse:collapse;
     border: 1px solid black;
     padding:0px;
