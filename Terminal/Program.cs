@@ -21,7 +21,7 @@ namespace Kakariki.Scrabble.Termanal
                 Program p = new Program();
                 //p.Test();
                 //WordList list = p.LoadWordList("data/3esl.txt");
-                WordList list = p.LoadWordList("data/NorthAmericanLongList.txt");
+                WordList list = p.LoadWordList("data/12dicts-5.0/5desk.txt");
                 
                 //p.TryHands(list);
                 p.PlayAGame(list);
