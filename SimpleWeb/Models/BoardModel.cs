@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+using Microsoft.AspNetCore.Mvc;
+
 using Kakariki.Scrabble.Logic;
+using Kakariki.Scrabble.SimpleWeb.Binder;
 using Kakariki.Scrabble.SimpleWeb.Configuration;
 using System.Diagnostics;
 
 namespace Kakariki.Scrabble.SimpleWeb.Models
 {
+    [ModelBinder(BinderType = typeof(BoardModelBinder))]
     public class BoardModel
     {
         public Board Board { get; }

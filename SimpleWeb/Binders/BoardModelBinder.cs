@@ -17,7 +17,9 @@ namespace Kakariki.Scrabble.SimpleWeb.Binder
     {
         public Task BindModelAsync (ModelBindingContext bindingContext)
         {
-            return null;
+            BoardModel model = GetBoard(bindingContext);
+            bindingContext.Result = ModelBindingResult.Success(model);
+            return Task.FromResult(1);
         }
 
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
@@ -26,6 +28,24 @@ namespace Kakariki.Scrabble.SimpleWeb.Binder
             controllerContext.ThrowIfNull("ControlContext");
 
             var request = controllerContext.HttpContext.Request;
+            WordList list = WordListConfig.Lists[WordListConfig.ENGLISH_AS_A_SECOND_LANGUAGE];
+            var board = Board.InitiliseBoard(list);
+            for(int row = Board.BOARD_START_INDEX; row <= Board.BOARD_END_INDEX; row++)
+            {
+                for(int column = Board.BOARD_START_INDEX; column <= Board.BOARD_END_INDEX; column++)
+                {
+                    string letter = GetA<string>(bindingContext, string.Format("[{0}][{1}].Cell.Letter", row, column));
+                    if (!letter.IsNullOrEmpty())
+                    {
+                        board.GetCell(column, row).Letter = letter[0];
+                    }
+                }
+            }
+            return new BoardModel(board, list);
+        }
+
+        private BoardModel GetBoard(ModelBindingContext bindingContext) {
+            bindingContext.ThrowIfNull("BindingContext");
             WordList list = WordListConfig.Lists[WordListConfig.ENGLISH_AS_A_SECOND_LANGUAGE];
             var board = Board.InitiliseBoard(list);
             for(int row = Board.BOARD_START_INDEX; row <= Board.BOARD_END_INDEX; row++)

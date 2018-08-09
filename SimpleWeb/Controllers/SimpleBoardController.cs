@@ -35,7 +35,7 @@ namespace Kakariki.Scrabble.SimpleWeb.Controllers
         public ActionResult SuggestWords(SuggestionRequestModel suggestionRequest)
         {
             var suggestions = new SuggestionsModel();
-            suggestions.Moves = FindMoves(suggestionRequest.Board.Board, suggestionRequest.Hand.Hand, suggestionRequest.Board.List)
+            suggestions.Moves = FindMoves(suggestionRequest?.Board?.Board, suggestionRequest?.Hand?.Hand, suggestionRequest?.Board?.List)
                 .Take(20).ToImmutableList();
             suggestionRequest.Suggestions = suggestions;
 
