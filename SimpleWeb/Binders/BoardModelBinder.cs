@@ -2,20 +2,50 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
+using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+
 using Kakariki.Scrabble.Logic;
 using Kakariki.Scrabble.SimpleWeb.Models;
+using Kakariki.Scrabble.SimpleWeb.Configuration;
 
 namespace Kakariki.Scrabble.SimpleWeb.Binder
 {
     public class BoardModelBinder : IModelBinder
     {
+        public Task BindModelAsync (ModelBindingContext bindingContext)
+        {
+            BoardModel model = GetBoard(bindingContext);
+            bindingContext.Result = ModelBindingResult.Success(model);
+            return Task.FromResult(1);
+        }
+
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             bindingContext.ThrowIfNull("BindingContext");
             controllerContext.ThrowIfNull("ControlContext");
 
             var request = controllerContext.HttpContext.Request;
+            WordList list = WordListConfig.Lists[WordListConfig.ENGLISH_AS_A_SECOND_LANGUAGE];
+            var board = Board.InitiliseBoard(list);
+            for(int row = Board.BOARD_START_INDEX; row <= Board.BOARD_END_INDEX; row++)
+            {
+                for(int column = Board.BOARD_START_INDEX; column <= Board.BOARD_END_INDEX; column++)
+                {
+                    string letter = GetA<string>(bindingContext, string.Format("[{0}][{1}].Cell.Letter", row, column));
+                    if (!letter.IsNullOrEmpty())
+                    {
+                        board.GetCell(column, row).Letter = letter[0];
+                    }
+                }
+            }
+            return new BoardModel(board, list);
+        }
+
+        private BoardModel GetBoard(ModelBindingContext bindingContext) {
+            bindingContext.ThrowIfNull("BindingContext");
             WordList list = WordListConfig.Lists[WordListConfig.ENGLISH_AS_A_SECOND_LANGUAGE];
             var board = Board.InitiliseBoard(list);
             for(int row = Board.BOARD_START_INDEX; row <= Board.BOARD_END_INDEX; row++)
@@ -40,7 +70,9 @@ namespace Kakariki.Scrabble.SimpleWeb.Binder
             string modelName = bindingContext.ModelName + key;
             valueResult = bindingContext.ValueProvider.GetValue(modelName);
             //Didn't work? Try without the prefix if needed...
-            if (valueResult == null && bindingContext.FallbackToEmptyPrefix == true)
+            //TODO Do we kill the following?
+            //if (valueResult == null && bindingContext.FallbackToEmptyPrefix == true)
+            if (valueResult == null)
             {
                 modelName = key;
                 valueResult = bindingContext.ValueProvider.GetValue(modelName);
@@ -54,11 +86,11 @@ namespace Kakariki.Scrabble.SimpleWeb.Binder
             bindingContext.ModelState.SetModelValue(modelName, valueResult);
             try
             {
-                return (T)valueResult.ConvertTo(typeof(T));
+                return (T)Convert.ChangeType(valueResult.FirstValue, typeof(T));
             }
             catch (Exception ex)
             {
-                bindingContext.ModelState.AddModelError(modelName, ex);
+                bindingContext.ModelState.AddModelError(modelName, ex, bindingContext.ModelMetadata);
                 return null;
             }
         }

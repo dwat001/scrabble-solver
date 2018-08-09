@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 using Kakariki.Scrabble.Logic;
 using System.IO;
 using Kakariki.Scrabble.SimpleWeb;
 using Kakariki.Scrabble.SimpleWeb.Models;
+using Kakariki.Scrabble.SimpleWeb.Configuration;
 
 namespace Kakariki.Scrabble.SimpleWeb.Controllers
 {
@@ -33,7 +35,7 @@ namespace Kakariki.Scrabble.SimpleWeb.Controllers
         public ActionResult SuggestWords(SuggestionRequestModel suggestionRequest)
         {
             var suggestions = new SuggestionsModel();
-            suggestions.Moves = FindMoves(suggestionRequest.Board.Board, suggestionRequest.Hand.Hand, suggestionRequest.Board.List)
+            suggestions.Moves = FindMoves(suggestionRequest?.Board?.Board, suggestionRequest?.Hand?.Hand, suggestionRequest?.Board?.List)
                 .Take(20).ToImmutableList();
             suggestionRequest.Suggestions = suggestions;
 
