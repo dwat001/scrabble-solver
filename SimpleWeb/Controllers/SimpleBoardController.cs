@@ -10,6 +10,7 @@ using Kakariki.Scrabble.Logic;
 using System.IO;
 using Kakariki.Scrabble.SimpleWeb;
 using Kakariki.Scrabble.SimpleWeb.Models;
+using Kakariki.Scrabble.SimpleWeb.Configuration;
 
 namespace Kakariki.Scrabble.SimpleWeb.Controllers
 {

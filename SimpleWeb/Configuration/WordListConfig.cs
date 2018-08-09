@@ -6,9 +6,17 @@ using System.Linq;
 using System.Web;
 
 using Kakariki.Scrabble.Logic;
+using Microsoft.AspNetCore.Builder;
 
-namespace Kakariki.Scrabble.SimpleWeb
+namespace Kakariki.Scrabble.SimpleWeb.Configuration
 {
+    public static class WordListConfigExtension
+    {
+        public static void UseWordList(this IApplicationBuilder app) 
+        {
+            WordListConfig.RegisterWordLists();
+        }
+    }
 
     public class WordListConfig
     {

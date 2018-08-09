@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 
 using Kakariki.Scrabble.Logic;
+using Kakariki.Scrabble.SimpleWeb.Configuration;
 using System.Diagnostics;
 
 namespace Kakariki.Scrabble.SimpleWeb.Models

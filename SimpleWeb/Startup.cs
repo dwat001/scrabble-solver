@@ -10,7 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Temp
+using Kakariki.Scrabble.SimpleWeb.Configuration;
+
+namespace Kakariki.Scrabble.SimpleWeb
 {
     public class Startup
     {
@@ -54,6 +56,7 @@ namespace Temp
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseWordList();
 
             app.UseMvc(routes =>
             {
@@ -61,6 +64,7 @@ namespace Temp
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 using Kakariki.Scrabble.Logic;
 using Kakariki.Scrabble.SimpleWeb.Models;
+using Kakariki.Scrabble.SimpleWeb.Configuration;
 
 namespace Kakariki.Scrabble.SimpleWeb.Binder
 {
