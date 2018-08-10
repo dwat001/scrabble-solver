@@ -1,17 +1,20 @@
-﻿@using Kakariki.Scrabble.SimpleWeb.Models
+﻿@using System.Linq
+@using Kakariki.Scrabble.SimpleWeb.Models
 @model SuggestionsModel
 
-<table class="suggestions">
+@if(Model.Moves.Any())
+{
+<table class="suggestions table table-striped">
     <tr>
         <th>Points</th>
-        <th>Column</th>
-        <th>Row</th>
         <th>Word</th>
+        <th>Direction</th>
+        <th>Column</th>
+        <th>Row</th>       
     </tr>
     @foreach (var item in Model.Moves)
     {
-        <tr>
-            @Html.DisplayFor(m => item)
-        </tr>
+    <tr>@Html.DisplayFor(m => item)</tr>
     }
 </table>
+}

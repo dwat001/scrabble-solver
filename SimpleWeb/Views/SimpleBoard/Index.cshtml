@@ -5,11 +5,28 @@
 
 @using (Html.BeginForm("SuggestWords", "SimpleBoard"))
 {
-    @Html.EditorFor(m => m.Board)
-    @Html.LabelFor(m=>m.Hand.Letters)
-    @Html.EditorFor(m => m.Hand.Letters, new  { htmlAttributes = new {maxlength = 7 } })
-    <input type="submit" name="submit" value="Submit" />
+    <div class="panel panel-default">
+        <div class="panel-heading">Board</div>
+        <div class="panel-body">
+            @Html.EditorFor(m => m.Board)
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">@Html.LabelFor(m=>m.Hand.Letters)</div>
+        <div class="panel-body">
+            @Html.EditorFor(m => m.Hand.Letters, new  { htmlAttributes = new {maxlength = 7 } })
+            <input type="submit" name="submit" value="Submit" />
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Word Direction</div>
+        <div class="panel-body">            
+            <label for="tb">Vertical</label> <input type="radio" name="direction" value="tb" id="tb"  />
+            <label for="lr">Horizontal</label><input type="radio" name="direction" value="lr" id="lr" checked="checked"/>
+        </div>
+    </div>   
+
     @Html.DisplayFor(m => m.Suggestions)
-    <label for="tb">Vertical</label> <input type="radio" name="direction" value="tb" id="tb"  />
-    <label for="lr">Horizontal</label><input type="radio" name="direction" value="lr" id="lr" checked="checked"/>
 }
