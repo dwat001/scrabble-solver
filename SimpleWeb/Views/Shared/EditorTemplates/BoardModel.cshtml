@@ -10,7 +10,7 @@
             <th></th>
             @for (int column = Board.BOARD_START_INDEX; column <= Board.BOARD_END_INDEX; column++)
             {
-                <th>@column</th>
+            <th>@column</th>
             }
         </tr>
     </thead>
@@ -21,16 +21,14 @@
                 <th>@row</th>
                 @for (int column = Board.BOARD_START_INDEX; column <= Board.BOARD_END_INDEX; column++)
                 {
-                    <td>
-                        @Html.EditorFor(m => m[row][column],
-                            new { htmlAttributes = new {
-                                maxlength = "1", size = "1",
-                                taborder = (row-1) * Board.BOARD_END_INDEX + column,
-                                @class = Model[row][column].Style,
-                                data_row = row,
-                                data_column = column
-                            } })
-                    </td>
+                <td>@Html.EditorFor(m => m[row][column],
+                        new { htmlAttributes = new {
+                            maxlength = "1", size = "1",
+                            taborder = (row-1) * Board.BOARD_END_INDEX + column,
+                            @class = Model[row][column].Style,
+                            data_row = row,
+                            data_column = column
+                        } })</td>
                 }
             </tr>
         }
